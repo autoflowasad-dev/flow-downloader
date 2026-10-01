@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flow Media Downloader — Dedicated Media Extractor for Google Flow</title>
+  <meta name="description" content="Batch download videos & images from Google Flow (flow.google.com). Auto-upscale to 1080p & 4K, sequential numbering (001.mp4), and instant missing sync.">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #111726;
+      --card-hover: #171f33;
+      --cyan: #06b6d4;
+      --blue: #388bfd;
+      --emerald: #10b981;
+      --text: #f0f6fc;
+      --muted: #8b949e;
+      --border: #222d42;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+    }
+    .top-strip {
+      height: 4px;
+      background: linear-gradient(90deg, var(--cyan), var(--blue), var(--emerald));
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(17, 23, 38, 0.95);
+    }
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .btn-wa {
+      background: #10b981;
+      color: #fff !important;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem !important;
+    }
+    .container {
+      max-width: 52rem;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+    .hero {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      background: rgba(6, 182, 212, 0.15);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      color: var(--cyan);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 40%, var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      color: var(--muted);
+      font-size: 1.15rem;
+      max-width: 40rem;
+      margin: 0 auto 2rem;
+    }
+    .cta-row {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.6rem;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(6, 182, 212, 0.6);
+    }
+    .btn-outline {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-outline:hover {
+      border-color: var(--cyan);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+      margin: 3.5rem 0;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.2s;
+    }
+    .card:hover {
+      background: var(--card-hover);
+      border-color: var(--cyan);
+      transform: translateY(-3px);
+    }
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+    .card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer a { color: var(--cyan); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="top-strip"></div>
+  <nav class="nav">
+    <a href="#" class="brand">🎬 Flow Media Downloader</a>
+    <div class="nav-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a class="btn-wa" href="https://wa.me/923116730583" target="_blank" rel="noopener">WhatsApp Support</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="hero">
+      <span class="badge">OFFICIAL COMPANION TOOL FOR GOOGLE FLOW</span>
+      <h1>Dedicated Media Downloader for Google Flow</h1>
+      <p class="lead">Batch extract entire projects from flow.google.com with automated 4K/1080p upscaling, clean sequential numbering (001.mp4), and instant missing clips recovery.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://chromewebstore.google.com" target="_blank" rel="noopener">⚡ Get on Chrome Web Store</a>
+        <a class="btn btn-outline" href="privacy.html">🛡️ View Privacy Policy</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>🚀 One-Click Canvas Sweep</h3>
+        <p>Instantly detects all generated videos and images across Google Flow's virtual viewport without missing a single tile.</p>
+      </div>
+      <div class="card">
+        <h3>🔢 Sequential Numbering</h3>
+        <p>Pre-sorts your files (001.mp4, 002.mp4) for direct drag-and-drop into Premiere Pro, DaVinci Resolve, or CapCut.</p>
+      </div>
+      <div class="card">
+        <h3>🎯 4K &amp; 1080p Auto-Upscale</h3>
+        <p>Triggers Google Flow's internal upscale pipeline automatically so you always get the highest possible visual clarity.</p>
+      </div>
+      <div class="card">
+        <h3>🛟 Save Missing Files</h3>
+        <p>Never re-download clips you already own. Instantly sync only newly created or failed files in seconds.</p>
+      </div>
+      <div class="card">
+        <h3>📱 Native Side Panel</h3>
+        <p>Runs side-by-side with Flow inside Google Chrome. Zero tabs clutter and real-time progress indicators.</p>
+      </div>
+      <div class="card">
+        <h3>🔒 100% Local &amp; Private</h3>
+        <p>Downloads transfer directly from Google servers to your local disk. No middleman servers, no trackers, zero ads.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>Flow Media Downloader — Developed with care by Muhammad Asad</p>
+    <p style="margin-top:0.4rem;">Direct Support: <a href="https://wa.me/923116730583" target="_blank" rel="noopener">+92 311 6730583</a> | Email: <a href="mailto:autoflow.asad@gmail.com">autoflow.asad@gmail.com</a></p>
+    <p style="margin-top:0.8rem;font-size:0.75rem;">Not affiliated with or endorsed by Google LLC. "Google Flow" is a trademark of Google LLC.</p>
+  </footer>
+</body>
+</html>
